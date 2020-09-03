@@ -8,7 +8,7 @@
 const info = {
     name: 'pjee'
 }    
-Function.prototype.callV3 = function (context) {
+Function.prototype.callV4 = function (context) {
     const ctx = context || window
     ctx.fn = this
     const args = []
@@ -27,7 +27,7 @@ function Person (name, age) {
         customName: this.name
     }
 }
-const ret = Person.callV3(null, 'gee', 18)
+const ret = Person.callV4(null, 'gee', 18)
 console.log(ret)
 </script>
 </html>
