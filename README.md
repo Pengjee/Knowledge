@@ -2,3 +2,4 @@
 
 ## call和apply的实现
 ## bind的实现
+## new的实现

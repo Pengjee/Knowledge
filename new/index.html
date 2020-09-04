@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>new</title>
+</head>
+<script>
+function Person (name, age) {
+    this.name = name;
+    this.age = age;
+    this.sex = 'boy'
+}
+
+Person.prototype.height = 180
+Person.prototype.Introduce = function () {
+    console.log(`My name is ${this.name}`)
+}
+function objectFactory () {
+    const obj = new Object()
+    const Constructor = [].shift.call(arguments)
+    obj.__proto__ = Constructor.prototype
+    const ret = Constructor.apply(obj, arguments)
+    return typeof ret === 'object' ? ret : obj
+}
+const person = objectFactory(Person, 'Pjee', 18)
+console.log(person.name) // Pjee
+console.log(person.sex) // boy
+console.log(person.height) // 180
+person.Introduce() // My name is Pjee
+</script>
+</html>
