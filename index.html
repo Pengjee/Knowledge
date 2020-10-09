@@ -2,21 +2,29 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>bind</title>
+  <title>flex</title>
 </head>
-<script>
-    var obj = new Proxy({}, {
-        get: function (target, propKey, receiver) {
-            console.log(target, propKey, receiver)
-            return Reflect.get(target, propKey, receiver)
-        },
-        set: function (target, propKey, value, receiver) {
-            console.log(target, propKey, value, receiver)
-            return Reflect.set(target, propKey, receiver)
-        }
-    })
-    obj.count = 1
-    // ++obj.count
-</script>
+<style type="text/css">
+    .container {
+        display: flex;
+        width: 400px;
+        height: 50px;
+        background: #ff5353;
+        text-align: center;
+        line-height: 50px;
+    }
+    .A { flex: 0 2 150px; }
+    .B { flex: 0 1 100px; }
+    .C { flex: 0 0 100px; }
+    .D { flex: 3 0 50px; }
+    .E { flex: 2 0 50px; }
+</style>
+<div class="container">
+    <div class="A">150</div>
+    <div class="B">100</div>
+    <div class="C">100</div>
+    <div class="D">380</div>
+    <div class="E">270</div>
+</div>
 </html>
 
