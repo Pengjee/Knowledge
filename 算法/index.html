@@ -5,21 +5,75 @@
   <title>new</title>
 </head>
 <script>
-var plusOne = function(digits) {
-    const len = digits.length
-    for (let i = len - 1; i >= 0; i--) {
-      digits[i]++
-      digits[i]%= 10
+const arr = [8,3,6,4,9,11,2,5,7]
 
-      if (digits[i] !== 0) {
-        return digits
+class BinaryTree {
+  constructor (tree = []) {
+    this.root = null // 根结点
+    this.arr = []
+    this.Node = key => {
+      return {key, right: null, left: null}
+    }
+
+    if (typeof tree === 'number') {
+      this.insert(tree)
+    } else if (Array.isArray(tree)) {
+      this.bulkInsert(tree)
+    } else {
+      console.error('数据类型错误')
+    }
+  }
+
+  insert (key) { 
+    let newNode = this.Node(key)
+    let _insertNode = (node, newNode) => {
+      if (newNode.key > node.key) {
+        if (node.right === null) {
+          node.right = {...newNode}
+        } else {
+          _insertNode(node.right, newNode)
+        }
+      } else {
+        if (node.left === null) {
+          node.left = {...newNode}
+        } else {
+          _insertNode(node.left, newNode)
+        }
       }
     }
-    digits = new Array(len + 1)
-    digits[0] = 1
-    return digits
-};
-const ret = plusOne([9])
+
+    if (this.root === null) {
+      this.root = newNode
+    } else {
+      _insertNode(this.root, newNode)
+    }
+  }
+
+  bulkInsert (nodes) { 
+    nodes.forEach(key => this.insert(key))
+  }
+
+  showTree () {
+    return this.root
+  }
+
+  showArr () {
+    return this.arr
+  }
+  
+  preOrderTraverse (node) {
+    if (node && node.key !== null) {
+      this.preOrderTraverse(node.left)
+      this.arr.push(node.key)
+      this.preOrderTraverse(node.right)
+    }
+  }
+}
+const binaryTree = new BinaryTree(arr)
+const ret = binaryTree.showTree()
 console.log(ret)
+binaryTree.preOrderTraverse(ret)
+
+console.log(binaryTree.showArr())
 </script>
 </html>
