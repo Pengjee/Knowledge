@@ -1,3 +1,13 @@
+## CSS优先级权重
+ID 选择器， 如 `#id{}`
+类选择器， 如 `.class{}`
+属性选择器， 如 `a[href="segmentfault.com"]{}`
+伪类选择器， 如 `:hover{}`
+伪元素选择器， 如 `::before{}`
+标签选择器， 如 `span{}`
+通配选择器， 如 `*{}`  
+内联样式 > ID 选择器 > 类选择器 = 属性选择器 = 伪类选择器 > 标签选择器 = 伪元素选择器
+
 ## 盒子模型
 由于前端规范的不统一，所以盒子模型分为两种：IE和W3C  
 * IE盒子模型可通过`box-sizing: border-box`来设置，`content = width + padding + border`
