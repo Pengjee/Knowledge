@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
   <title>flex</title>
 </head>
-<style type="text/css">
-    .container {
-        display: flex;
-        width: 400px;
-        height: 50px;
-        background: #ff5353;
-        text-align: center;
-        line-height: 50px;
-    }
-    .A { flex: 0 2 150px; }
-    .B { flex: 0 1 100px; }
-    .C { flex: 0 0 100px; }
-    .D { flex: 3 0 50px; }
-    .E { flex: 2 0 50px; }
-</style>
+
 <div class="container">
-    <div class="A">150</div>
-    <div class="B">100</div>
-    <div class="C">100</div>
-    <div class="D">380</div>
-    <div class="E">270</div>
+<script type="text/javascript">
+    /**
+ * @param {character[][]} board
+ * @param {string} word
+ * @return {boolean}
+ */
+ var sumNums = function(n) {
+    const arr = new Array(n)
+    let sum = 0
+    arr.map((item, index) => {
+      console.log(index)
+      const count = index + 1
+      sum += count
+    })
+    console.log(sum)
+    return sum
+ };
+ sumNums(3)
+</script>
 </div>
 </html>
 
