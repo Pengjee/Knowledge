@@ -9,4 +9,3 @@ BFC(Block Formatting Context) 直译为“块级格式化范围”。它是W3C C
 4. position的值部位relative和static
 
 ## BFC的约束规则
-1. 内部的Box会在崔志
