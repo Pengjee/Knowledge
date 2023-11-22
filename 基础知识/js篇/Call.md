@@ -8,7 +8,7 @@ const info = {
     name: pjee
 }
 
-funciton Person () {
+function Person () {
     console.log(`My name is ${this.name}`)
 }
 
@@ -23,7 +23,7 @@ Person.call(info)  // My name is Pjee
 ```javascript
 const info = {
     name: 'pjee',
-    Person: funciton () {
+    Person: function () {
         console.log(`My name is ${this.name}`)
     }
 }
