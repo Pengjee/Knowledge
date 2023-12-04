@@ -62,7 +62,7 @@ function Person (name, age) {
     console.log(age) // 18 
     console.log(this.name) // pjee
 }
-bar.call(info, 'gee', 18)
+Person.call(info, 'gee', 18)
 ```
 我们把`Person`中的`this`打印出来依然是指向`info`的对象的，但是对于后续传入的参数我们并不确定。但是`Arguments`对象中的值我们是可以取到的，我们取第二个到最后一个参数，然后放到一个数组中。所以就可以改造出第二个版本
 ```javascript
