@@ -9,5 +9,16 @@
     div2.innerText = 'time.geekbang.com'
 </script>
 <div>test</div>
+<script>
+    function A  () {}
+    var a = new A()
+    console.dir(A)
+    if (a.constructor === A) {
+        console.log(1)
+    }
+
+    console.log(Object.prototype.toString.call(a))
+
+</script>
 </body>
 </html>

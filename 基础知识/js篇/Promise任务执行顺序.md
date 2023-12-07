@@ -2,33 +2,41 @@
 请写出下面代码的输出结果
 ```js
 async function async1() {
+    // 2
    console.log('async1 start')
-   await async2()
+   await console.log(1)
+    // 6
    console.log('async1 end')
 }
 
 async function async2() {
+    // 3
    console.log('async2')
 }
 
+// 1
 console.log('script start')
 
 setTimeout(function() {
+    // 8
    console.log('setTimeout')
 }, 0)  
 
 async1()
 
 new Promise(function(resolve) {
+    // 4
    console.log('promise1')
    resolve()
 }).then(function() {
+    // 7 
    console.log('promise2')
 })
 
+// 5
 console.log('script end')
 ```
-
+[setTimout,  promise2]
 ### Answer
 ```js
 // script start
