@@ -17,3 +17,26 @@ BFC 全称为 block formatting context，中文为“块级格式化上下文”
 - column-span 设置为 all 的元素。
 
 ### 2、回流和重绘是什么？有什么区别？
+#### 回流（Layout）
+根据生成的渲染树，进行回流(Layout)，得到节点的几何信息（位置，大小）
+#### 重绘（Painting）
+根据渲染树以及回流得到的几何信息，得到节点的绝对像素，重新绘制
+
+页面布局和几何信息发生变化时，会进行回流，触发回流必定导致重绘。颜色、阴影、文本方向的修改会发起重绘，但并不会导致回流
+### 3、flex布局
+弹性布局
+```css
+.style {
+    flex-direction: row | row-reverse | column | column-reverse; // 主轴方向
+    flex-wrap: wrap | no-wrap | wrap-reverse; // 是否换行
+    justify-content: flex-start | flex-end | center | space-between | space-around; // 主轴上的对齐方式
+    // baseline 项目的第一行文字的基线对齐
+    align-items: flex-start | flex-end | center | baseline | stretch; // 项目在交叉轴上如何对齐
+    align-content: flex-start | flex-end | center | space-between | space-around | stretch; // 定义了多根轴线的对齐方式
+    flex-grow: 0; // 项目的放大比例
+    flex-shrink: 1; // 项目的缩小比例
+    flex-basis: auto; // 定义了在分配多余空间之前，项目占据的主轴空间
+}
+```
+flex: 1 表示撑满整个父容器
+flex: start, margin-left: auto 表示设置的子节点右对齐剩余的左对齐

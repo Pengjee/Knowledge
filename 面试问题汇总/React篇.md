@@ -9,3 +9,8 @@
 ### 3、React中的任务调度
 
 ### 4、useEffect和useLayoutEffect区别
+
+### 5、为什么在18之前有的setState是同步的，有的是异步的？
+在react18之前，因为setState的合并是半自动的，在合适时机使用batchedUpdates合并setState的变更，所以先setState变更的值，需要等到所有setState合并过后
+才会做出更新，这样看起来就是异步的。但是当我们用setTimeout包裹时，早已跳除了batchedUpdates调用栈，executionContext已不包含BatchedContext,所以此时
+触发的更新不会主动批量更新
