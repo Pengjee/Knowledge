@@ -1,24 +1,15 @@
 ### 1.JS数组遍历
 
 ```js
-for (let i = 0; i < []; i++) {
-}
-for (let item in []) {
-}
-for (let item of []) {
-}
-[].forEach(() => {
-});
-[].map(() => {
-});
-[].reduce(() => {
-});
-[].some(() => {
-});
-[].every(() => {
-});
-[].filter(() => {
-});
+for (let i = 0; i < []; i++) {}
+for (let item in []) {}
+for (let item of []) {}
+[].forEach(() => {});
+[].map(() => {});
+[].reduce(() => {});
+[].some(() => {});
+[].every(() => {});
+[].filter(() => {});
 ```
 
 ### 2、bind、call、apply 有什么区别？如何实现一个bind
@@ -34,6 +25,8 @@ function Person(name, age) {
     console.log(age) // 18
     console.log(this.name)
 }
+
+Person.call(info, 18)
 
 Function.prototype.callCustom = function (context) {
     const args = []

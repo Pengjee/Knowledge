@@ -1,18 +1,25 @@
-const info = {
-    name: 'pjee'
-}
-function Person (sex) {
-    console.log(`My name is ${this.name} ${sex}`)
-}
-const newPerson = Person.bind(info, 'nv')
-newPerson() // => `My name is pjee`
-
-Function.prototype.bindCustom = function (ctx) {
-    const args = Array.prototype.slice.call(arguments, 1)
-    return () => {
-        this.apply(ctx, args)
+function add(num1, num2) {
+    const arr1 = num1.split('')
+    const arr2 = num2.split('')
+    const maxLenArr = arr1.length > arr2.length ? arr1 : arr2
+    const minLenArr = arr1.length > arr2.length ? arr2 : arr1
+    let ret = []
+    let flag = false
+    for (let i = maxLenArr.length - 1; i >= 0; i--) {
+        const sum = Number(maxLenArr[i] || 0) + Number(minLenArr[i] || 0) + (flag ? 1 : 0)
+        if (sum >= 10) {
+           flag = true
+           ret.push(sum - 10)
+        } else {
+            flag = false
+            ret.push(sum)
+        }
     }
+    let str = ''
+    ret.forEach((item) => {
+        str = item + str
+    })
+    return str
 }
 
-const newCustomPerson = Person.bindCustom(info, 'nan')
-newCustomPerson()
+add('123', '123')
