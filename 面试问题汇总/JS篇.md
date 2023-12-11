@@ -166,3 +166,5 @@ function objectFactory() {
     return obj
 }
 ```
+
+### 0.1+0.2精度丢失为什么，怎么解决
