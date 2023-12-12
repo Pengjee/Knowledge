@@ -95,8 +95,7 @@ class PromiseCustom {
 
     }
 
-    race(value) {
-    }
+    race(value) {}
 }
 
 // @ts-ignore
