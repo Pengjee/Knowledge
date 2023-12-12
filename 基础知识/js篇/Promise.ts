@@ -24,12 +24,7 @@ class PromiseCustom {
 
         // 成功
         const resolve = (value) => {
-            console.log(value)
             // 如果 value 是一个promise，那我们的库中应该也要实现一个递归解析
-            if(value instanceof PromiseCustom){
-                // 递归解析
-                return value.then(resolve,reject)
-            }
             if (this.status === REQUEST_STATUS.PENDING) {
                 this.status = REQUEST_STATUS.FULFILLED
                 this.value = value
@@ -64,47 +59,23 @@ class PromiseCustom {
         return new PromiseCustom((resolve, reject) => {
             // 成功
             if (this.status === REQUEST_STATUS.FULFILLED) {
-                setTimeout(() => {
-                    try {
-                        const ret = onFulfilled(this.value)
-                        resolve(ret)
-                    } catch (err) {
-                        reject(err)
-                    }
-                }, 0)
+                const ret = onFulfilled(this.value)
+                resolve(ret)
             }
             // 失败
             if (this.status === REQUEST_STATUS.REJECTED) {
-                setTimeout(() => {
-                    try {
-                        const ret = onRejected(this.reason)
-                        reject(ret)
-                    } catch (err) {
-                        reject(err)
-                    }
-                }, 0)
+                const ret = onRejected(this.reason)
+                reject(ret)
             }
             // 处理中
             if (this.status === REQUEST_STATUS.PENDING) {
                 this.onResolveCallbacks.push(() => {
-                    setTimeout(() => {
-                        try {
-                            const ret = onFulfilled(this.reason)
-                            resolve(ret)
-                        } catch (err) {
-                            reject(err)
-                        }
-                    }, 0)
+                    const ret = onFulfilled(this.value)
+                    resolve(ret)
                 })
                 this.onRejectedCallbacks.push(() => {
-                    setTimeout(() => {
-                        try {
-                            const ret = onRejected(this.reason)
-                            reject(ret)
-                        } catch (err) {
-                            reject(err)
-                        }
-                    }, 0)
+                    const ret = onRejected(this.reason)
+                    reject(ret)
                 })
             }
         })
