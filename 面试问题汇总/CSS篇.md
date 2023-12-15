@@ -83,3 +83,20 @@ CSS animations，transforms以及transitions不会自动开启GPU加速，而是
 }
 ```
 原生的移动端应用总是可以很好的运用GPU,这是为什么它比网页应用表现更好的原因。硬件加速在移动端尤其有用，因为它可以有效的减少资源的利用。但是过多使用GPU可能会导致严重的性能问题，因为它增加了内存的使用，而且他会减少移动端设备的电池寿命。
+
+### Css隐藏属性
+```css
+.hidden {
+    display: none;
+    
+    visibility: hidden;
+    
+    opacity: 0;
+    
+    height: 0;
+    width: 0;
+    z-index: -999
+}
+```
+回流：`display`、`position`
+重绘：`visibility`、`opacity`、`z-index`

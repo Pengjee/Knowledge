@@ -1,25 +1,50 @@
-function Person(){}
-
-Person.prototype = {
-    name: 'Nicholas',
-    age: 29,
-    job: 'Software Engineer',
-    friends: ['Shelby', 'Court'],
-    sayName: function (){
-        console.log(this.name);
-    }
+const promise1 = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('success1')
+        }, 2000)
+    })
 }
 
-const person1 = new Person();
-const person2 = new Person();
+const promise2 = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            resolve('success2')
+        }, 1000)
+    })
+}
 
-person1.friends.push('Van');
 
-console.log(person1.friends);
-// 'Shelby,Court,Van'
-console.log(person2.friends);
-// 'Shelby,COurt,Van'
-console.log(person1.friends == person2.friends);
-// true
-person1.friends.push('Lucy')
-console.log(person1.friends, person2.friends)
+const promise3 = () => {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            reject('success3')
+        }, 3000)
+    })
+}
+
+Promise.prototype.allCustom = (promises) => {
+    return new Promise((resolve, reject) => {
+        let index = 0
+        const ret = []
+
+        for (let i = 0; i < promises.length; i++) {
+            const reqIndex = i
+                Promise.resolve(promises[i]()).then((data) => {
+                ret[reqIndex] = data
+                index++
+                if (index === promises.length - 1) {
+                    resolve(ret)
+                }
+            }).catch(() => {
+                reject(`error', ${i}`)
+            })
+        }
+    })
+}
+
+const pa = Promise.prototype.allCustom([promise1, promise2, promise3]).then((data) => {
+    console.log(data)
+}).catch(err => {
+    console.error(err)
+})

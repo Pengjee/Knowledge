@@ -157,14 +157,60 @@ console.log(10);
 
 ### 8、手写new
 ```js
-function objectFactory() {
+function objectFactory () {
     const obj = new Object()
-    const constructor = arguments[0]
-    obj.__proto__ = constructor.prototype
-    constructor.apply(obj, arguments)
-    return obj
+    const Constructor = [].shift.call(arguments)
+    obj.__proto__ = Constructor.prototype
+    const ret = Constructor.apply(obj, arguments)
+    return typeof ret === 'object' ? ret : obj
 }
 ```
 
+### 手写instanceof 
+```js
+const instanceofCustom = (val, compareVal) => {
+    while(val.__proto__) {
+        if (val.__proto__ == compareVal.prototype) {
+            return true
+        }
+        val = val.__proto__
+    }
+    return false
+}
+```
 ### 0.1+0.2精度丢失为什么，怎么解决
 
+
+### 箭头函数和普通函数的区别
+
+### 红绿灯交替闪烁
+```js
+// 红绿灯交替闪烁
+
+function red() {console.log('红灯亮')}
+function yellow() { console.log('黄灯亮')}
+function green() { console.log('绿灯亮') }
+
+const light = (fn, time) => {
+    return new Promise(resolve => {
+        setTimeout(() => {
+            fn && fn();
+            resolve();
+        }, time);
+    })
+}
+
+const stepLight = () => {
+    Promise.resolve().then(() => {
+        return light(red, 3000)
+    }).then(() => {
+        return light(yellow, 2000)
+    }).then(() => {
+        return light(green, 1000)
+    }).then(() => {
+        return stepLight()
+    })
+}
+
+stepLight()
+```
