@@ -40,7 +40,7 @@ let callbackNode: number | undefined = undefined
 const schedule = () => {
     if (callbackNode) {
         clearTimeout(callbackNode)
-    }
+
     callbackNode = setTimeout(() => {
         workInProgressHook = fiber.memoizedState
         window.app = fiber.stateNode()

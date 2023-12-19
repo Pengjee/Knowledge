@@ -179,9 +179,3 @@ function objectFactory(constructor, ...rest) {
 ```
 显示绑定 > 构造调用绑定 > 隐式绑定
 ```
-
-```vue
-props={((data) => this.data = data}
-
-this.$emit('', fn)
-```
