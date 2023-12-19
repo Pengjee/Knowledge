@@ -110,7 +110,7 @@ const throttle = (fn, delay) => {
         const context = this
         const args = arguments
         if (!timer) {
-            timer = setInterval(() => {
+            timer = setTimeout(() => {
                 fn.apply(context, args)
                 timer = null
             }, delay)
