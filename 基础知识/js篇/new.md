@@ -103,18 +103,12 @@ console.log(person.sex) // => undefined
 ```
 因此我还需要判断返回的值是否为一个对象，如果是就直接返回这个对象，如果不是我们就直接返回
 ```js
-function objectFactory(constructor, ...rest) {
-    // 创建空对象，空对象关联构造函数的原型对象
-    const instance = Object.create(constructor.prototype);
-
-    // 执行对象类的构造函数，同时该实例的属性和方法被 this 所引用，即 this 指向新构造的实例
-    const result = constructor.apply(instance, rest);
-
-    // 判断构造函数的运行结果是否对象类型
-    if (result !== null && /^(object|function)$/.test(typeof result)) {
-        return result;
-    }
-
-    return instance;
+function objectFactory () {
+    const obj = new Object()
+    const Constructor = [].shift.call(arguments)
+    obj.__proto__ = Constructor.prototype
+    const ret = Constructor.apply(obj, arguments)
+    return typeof ret === 'object' ? ret : obj
 }
 ```
+
