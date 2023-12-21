@@ -120,6 +120,8 @@ const throttle = (fn, delay) => {
 
 ```
 ### 7、Event Loop事件轮询机制
+宏任务：setTimeout()、setInterval()、setImmediate()、I/O、用户交互操作，UI渲染  
+微任务：promise.then()、promise.catch()、new MutationObserver、process.nextTick()
 ```js
 const first = () => (new Promise((resolve, reject) => {
     console.log(3);
