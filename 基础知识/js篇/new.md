@@ -103,12 +103,10 @@ console.log(person.sex) // => undefined
 ```
 因此我还需要判断返回的值是否为一个对象，如果是就直接返回这个对象，如果不是我们就直接返回
 ```js
-function objectFactory () {
-    const obj = new Object()
-    const Constructor = [].shift.call(arguments)
-    obj.__proto__ = Constructor.prototype
-    const ret = Constructor.apply(obj, arguments)
+const objectCreate = function () {
+    const [Constructor, ...rest] = arguments
+    const obj = Object.create(Constructor.prototype)
+    const ret = Constructor.apply(obj, rest)
     return typeof ret === 'object' ? ret : obj
 }
 ```
-

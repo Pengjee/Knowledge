@@ -10,6 +10,25 @@ const data = [
     {id: 8, parent: 6},
 ]
 
+function arrayToTree (data = []) {
+    if (data.length === 0) return []
+    const ret = []
+    const obj = {}
+    for (let i = 0; i < data.length; i++) {
+        obj[data[i].id] = data[i]
+    }
+
+    for (let i = 0; i < data.length; i++) {
+        if (obj[data[i].parent]) {
+            (obj[data[i].parent].children || (obj[data[i].parent].children = [])).push(data[i])
+        } else {
+            ret.push(data[i])
+        }
+    }
+    return ret
+}
+
+
 function fn(list) {
     let obj = {}
     let res = []
@@ -26,4 +45,3 @@ function fn(list) {
     return res
 }
 const ret = fn(data)
-console.log(ret)

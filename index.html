@@ -1,25 +1,24 @@
 <html>
 <meta charset="UTF-8" />
 <body>
-<div>1</div>
 <style>
     .container {
-        width: 500px;
-        height: 500px;
-        background: #000;
-    }
+        width: 50px;
+        height: 50px;
+        background: black;
+        /*position: relative;*/
+        /*top: 50%;*/
+        /*left: 50%;*/
+        /*transform: translate(-50%, -50%);*/
 
-    .content {
-        width: 100%;
-        height: 100%;
-        background: #fff;
-        transform: scale(0.5);
+        margin: calc((100vh - 50px)/ 2) auto;
     }
 </style>
-<div class="container">
-    <div class="content"></div>
+<div id="container">
+    测试
 </div>
 <script src="./index.js">
+    const [dom, state] = useHover(document.getElementById('id'))
 </script>
 </body>
 </html>

@@ -24,7 +24,6 @@ class PromiseCustom {
 
         // 成功
         const resolve = (value) => {
-            // 如果 value 是一个promise，那我们的库中应该也要实现一个递归解析
             if (this.status === REQUEST_STATUS.PENDING) {
                 this.status = REQUEST_STATUS.FULFILLED
                 this.value = value
@@ -52,10 +51,10 @@ class PromiseCustom {
 
     then(onFulfilled, onRejected) {
         // 添加默认值
-        onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
-        onRejected = typeof onRejected === 'function' ? onRejected : err => {
-            throw err
-        }
+        // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+        // onRejected = typeof onRejected === 'function' ? onRejected : err => {
+        //     throw err
+        // }
         return new PromiseCustom((resolve, reject) => {
             // 成功
             if (this.status === REQUEST_STATUS.FULFILLED) {

@@ -182,36 +182,27 @@ const instanceofCustom = (val, compareVal) => {
 ```
 ### 0.1+0.2精度丢失为什么，怎么解决
 
-### 箭头函数和普通函数的区别
-
-### 红绿灯交替闪烁
+### 普通函数和箭头函数的区别
+1. 普通函数有`constructor`
+2. 普通函数的this指针是是调用时确定指向的，箭头函数没有自己的this，它会捕获自己在（注意，是定义时，不是调用时）所处的外层执行环境的this，并继承这个this值，且永远不变
 ```js
-// 红绿灯交替闪烁
-
-function red() {console.log('红灯亮')}
-function yellow() { console.log('黄灯亮')}
-function green() { console.log('绿灯亮') }
-
-const light = (fn, time) => {
-    return new Promise(resolve => {
-        setTimeout(() => {
-            fn && fn();
-            resolve();
-        }, time);
-    })
+var id = 'Global';
+function fun1() {
+    // setTimeout中使用普通函数
+    setTimeout(function(){
+        console.log(this.id);
+    }, 2000);
 }
-
-const stepLight = () => {
-    Promise.resolve().then(() => {
-        return light(red, 3000)
-    }).then(() => {
-        return light(yellow, 2000)
-    }).then(() => {
-        return light(green, 1000)
-    }).then(() => {
-        return stepLight()
-    })
+function fun2() {
+    // setTimeout中使用箭头函数
+    setTimeout(() => {
+        console.log(this.id);
+    }, 2000)
 }
-
-stepLight()
+fun1.call({id: 'Obj'});     // 'Global'
+fun2.call({id: 'Obj'});     // 'Obj'
 ```
+3. call、apply、bind无法改变箭头函数的this指向
+4. 箭头函数不能作为构造函数，因为没有`prototype`
+5. 箭头函数没有arguments
+6. 箭头函数不能作为Generator，不能使用yeild关键字
