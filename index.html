@@ -1,24 +1,18 @@
 <html>
 <meta charset="UTF-8" />
 <body>
-<style>
-    .container {
-        width: 50px;
-        height: 50px;
-        background: black;
-        /*position: relative;*/
-        /*top: 50%;*/
-        /*left: 50%;*/
-        /*transform: translate(-50%, -50%);*/
-
-        margin: calc((100vh - 50px)/ 2) auto;
-    }
-</style>
-<div id="container">
-    测试
-</div>
-<script src="./index.js">
-    const [dom, state] = useHover(document.getElementById('id'))
+<body>
+<span id="showContent">在右侧输入框中输入内容</span>
+<input type="text" name="content" id="content">
+<button id="btn">更新内容</button>
+<script>
+    const button = document.getElementById('btn')
+    const input = document.getElementById('content')
+    const span = document.getElementById('showContent')
+    button.addEventListener('click', (event) => {
+        console.dir(input.value)
+        span.innerHTML = input.value
+    })
 </script>
 </body>
 </html>
