@@ -1,103 +1,98 @@
-class PromiseCustom {
-    private status: 'pending' | 'fulfilled' | 'resolved';
-    private data: any
-    private callbacks: { onResolved: () => void, onRejected: () => void }[]
+const REQUEST_STATUS = {
+    PENDING: 'PENDING',
+    FULFILLED: 'FULFILLED',
+    REJECTED: 'REJECTED'
+}
 
+class PromiseCustom {
+    private status: string;
+    private value: any;
+    private reason: any;
+    private onResolveCallbacks: any[];
+    private onRejectedCallbacks: any[];
     constructor(executor) {
-        this.status = 'pending'
-        this.data = undefined
-        this.callbacks = []
+        // 默认初始状态
+        this.status = REQUEST_STATUS.PENDING
+        // 存放结果
+        this.value = undefined;
+        // 失败原因
+        this.reason = undefined;
+        // 存放成功回调，防止回调中存在异步函数
+        this.onResolveCallbacks = []
+        // 存放失败回调，防止回调中存在异步函数
+        this.onRejectedCallbacks = []
+
+        // 成功
+        const resolve = (value) => {
+            if (this.status === REQUEST_STATUS.PENDING) {
+                this.status = REQUEST_STATUS.FULFILLED
+                this.value = value
+
+                this.onResolveCallbacks.forEach(fn => fn())
+            }
+        }
+
+        // 失败
+        const reject = (reason) => {
+            if (this.status === REQUEST_STATUS.PENDING) {
+                this.status = REQUEST_STATUS.REJECTED
+                this.reason = reason
+
+                this.onRejectedCallbacks.forEach(fn => fn())
+            }
+        }
 
         try {
-            executor(this.resolve, this.reject)
+            executor(resolve, reject)
         } catch (err) {
-            // 如果执行器抛出异常，promise对象变为rejected状态
-            this.reject(err)
+            reject(err)
         }
     }
 
-    then(onResolved, onRejected) {
+    then(onFulfilled, onRejected) {
+        // 添加默认值
+        // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
+        // onRejected = typeof onRejected === 'function' ? onRejected : err => {
+        //     throw err
+        // }
         return new PromiseCustom((resolve, reject) => {
-            if (this.status === 'pending') {
-                this.callbacks.push({
-                    onResolved() {
-                        onResolved(this.data)
-                    },
-                    onRejected() {
-                        onResolved(this.data)
-                    }
+            // 成功
+            if (this.status === REQUEST_STATUS.FULFILLED) {
+                const ret = onFulfilled(this.value)
+                resolve(ret)
+            }
+            // 失败
+            if (this.status === REQUEST_STATUS.REJECTED) {
+                const ret = onRejected(this.reason)
+                reject(ret)
+            }
+            // 处理中
+            if (this.status === REQUEST_STATUS.PENDING) {
+                this.onResolveCallbacks.push(() => {
+                    const ret = onFulfilled(this.value)
+                    resolve(ret)
                 })
-            } else if (this.status === 'resolved') {
-                setTimeout(() => {
-                    try {
-                        const ret = onResolved(this.data)
-                        if (ret instanceof PromiseCustom) {
-                            // 2. 如果回调函数返回的是promise，return的promise的结果就是这个promise的结果
-                            ret.then(value => { resolve(value) }, reason => { reject(reason) })
-                        } else {
-                            // 1. 如果回调函数返回的不是promise，return的promise的状态是resolved，value就是返回的值。
-                            resolve(ret)
-                        }
-                    } catch (e) {
-                        reject(e)
-                    }
-
-                })
-            } else {
-                setTimeout(() => {
-                    onRejected(this.data)
+                this.onRejectedCallbacks.push(() => {
+                    const ret = onRejected(this.reason)
+                    reject(ret)
                 })
             }
         })
-
     }
 
-    catch(onRejected) {
-
+    static reject (data) {
+        return new PromiseCustom((resolve, reject) => {
+            reject(data)
+        })
     }
 
-    resolve(value) {
-        if (this.status !== 'pending') {
-            return;
-        }
-
-        this.status = 'resolved'
-        this.data = value
-
-        if (this.callbacks.length > 0) {
-            setTimeout(() => {
-                this.callbacks.forEach((callback) => {
-                    callback.onResolved()
-                })
-            })
-        }
+    static resolve (data) {
+        return new PromiseCustom((resolve, reject) => {
+            resolve(data)
+        })
     }
 
-    reject(value) {
-        if (this.status !== 'pending') {
-            return;
-        }
-
-        this.status = 'fulfilled'
-        this.data = value
-
-        // 如果有待执行的callback函数，立即异步执行回调函数onResolved
-        if (this.callbacks.length > 0) {
-            setTimeout(() => {
-                this.callbacks.forEach((callback) => {
-                    callback.onRejected()
-                })
-            })
-        }
-    }
-
-    all(value) {
-
-    }
-
-    race(value) {
+    catch(errCallback) {
+        this.then(null, errCallback)
     }
 }
-
-// @ts-ignore
-window.PromiseCustom = PromiseCustom

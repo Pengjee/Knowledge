@@ -85,26 +85,25 @@ console.log(obj.play) //
 
 我们再升级一下`bindV3`
 ```js
-Function.prototype.bindV4 = function (ctx) {
-    if (typeof this !== "function") {
-      throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
-    }
-
-    const args = Array.prototype.slice.call(arguments, 1)
-
-    // 我们直接修改 fBound.prototype 的时候，也会直接修改绑定函数的 prototype,所以可以用一个空函数来中转一下
-    const fNOP = function () {}
-    const fBound = () => {
-        const bindArgs = Array.prototype.slice.call(arguments)
-        // 当作为构造函数时，this 指向实例，此时结果为 true，将绑定函数的 this 指向该实例，可以让实例获得来自绑定函数的值
-        // 以上面的是 demo 为例，如果改成 `this instanceof fBound ? null : ctx`，实例只是一个空对象，将 null 改成 this ，实例会具有 height 属性
-        // 当作为普通函数时，this 指向 window，此时结果为 false，将绑定函数的 this 指向 ctx
-        return this.apply(this instanceof fNOP ? this : ctx, args.concat(bindArgs))
-    }
-
-    fNOP.prototype = this.prototype
-    fBound.prototype = new fNOP()
-    return fBount
-}
+Function.prototype.bind = function (context) {
+  if (typeof this !== 'function') {
+    throw new TypeError('当前调用 call 方法的不是函数.');
+  }
+  // 参数要拼接
+  const args = Array.prototype.slice.call(arguments, 1);
+  const currentContext = this;
+  const fn = function () {
+    return currentContext.apply(
+      this instanceof fn ? this : context,
+      args.concat(Array.prototype.slice.call(arguments))
+    );
+  };
+  const OP = function () {};
+  if (this.prototype) {
+    OP.prototype = this.prototype;
+  }
+  fn.prototype = new OP();
+  return fn;
+};
 ```
 

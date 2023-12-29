@@ -1,13 +1,18 @@
 <html>
+<meta charset="UTF-8" />
 <body>
-<div>1</div>
+<body>
+<span id="showContent">在右侧输入框中输入内容</span>
+<input type="text" name="content" id="content">
+<button id="btn">更新内容</button>
 <script>
-    let div1 = document.getElementsByTagName('div')[0]
-    div1.innerText = 'time.geekbang'
-
-    let div2 = document.getElementsByTagName('div')[1]
-    div2.innerText = 'time.geekbang.com'
+    const button = document.getElementById('btn')
+    const input = document.getElementById('content')
+    const span = document.getElementById('showContent')
+    button.addEventListener('click', (event) => {
+        console.dir(input.value)
+        span.innerHTML = input.value
+    })
 </script>
-<div>test</div>
 </body>
 </html>
