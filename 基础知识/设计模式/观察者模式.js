@@ -1,23 +1,22 @@
-class Subject {
-    constructor() {
-        this.observers = []
-    }
+const queuedObservers = new Set();
 
-    add (event) {
-        this.observers.push(event)
-    }
+const observe = fn => queuedObservers.add(fn);
+const observable = obj => new Proxy(obj, {set});
 
-    notify (params) {
-        this.observers.forEach((fn) => fn.update(params))
-    }
+function set(target, key, value, receiver) {
+    const result = Reflect.set(target, key, value, receiver);
+    queuedObservers.forEach(observer => observer());
+    return result;
 }
 
-class Observer {
-    constructor(name) {
-        this.name = name
-    }
+const person = observable({
+    name: '张三',
+    age: 20
+});
 
-    update (nextState) {
-        console.log('被观察已更新', nextState)
-    }
+function print() {
+    console.log(`${person.name}, ${person.age}`)
 }
+
+observe(print);
+person.name = '李四'; // 李四， 20

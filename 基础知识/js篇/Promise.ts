@@ -51,10 +51,6 @@ class PromiseCustom {
 
     then(onFulfilled, onRejected) {
         // 添加默认值
-        // onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
-        // onRejected = typeof onRejected === 'function' ? onRejected : err => {
-        //     throw err
-        // }
         return new PromiseCustom((resolve, reject) => {
             // 成功
             if (this.status === REQUEST_STATUS.FULFILLED) {

@@ -27,21 +27,3 @@ function arrayToTree (data = []) {
     }
     return ret
 }
-
-
-function fn(list) {
-    let obj = {}
-    let res = []
-    for (let item of list) {
-        obj[item.id] = item
-    }
-    for (let item of list) {
-        if (obj[item.parent]) {
-            (obj[item.parent].children || (obj[item.parent].children = [])).push(item)
-        } else {
-            res.push(item)
-        }
-    }
-    return res
-}
-const ret = fn(data)
